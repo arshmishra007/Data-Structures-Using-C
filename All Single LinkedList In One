@@ -1,0 +1,169 @@
+DATASTRUCTURES NOT TO FORGET
+
+LINKED LIST OPERATIONS
+
+#include<iostream>
+using namespace std;
+
+struct node
+{
+    int data;
+    struct node * next;
+};
+
+struct node * head=NULL;
+
+void InsertAtBegin(int data)
+{
+  struct node * temp = (struct node *)malloc(sizeof(struct node));
+  
+  temp->data = data;
+  temp->next = NULL;
+  
+  if(head==NULL)
+  {
+      head = temp;
+  }
+  else
+  {
+      temp->next = head;
+      head = temp;
+  }
+  
+}
+
+void InsertAtEnd(int data)
+{
+    struct node* temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = data;
+    temp->next = NULL;
+    // checking for the head node 
+    if(head==NULL)
+    {
+        head = temp;
+    }
+    else
+    {
+        struct node *q;
+        q = head;
+        while(q->next!=NULL)
+        {
+            q = q->next;
+        }
+        q->next = temp;
+    }
+    
+    
+    
+}
+
+void InsertAtPos(int data,int pos)
+{
+    struct node * temp = (struct node *)malloc(sizeof(struct node));
+    temp->data = data;
+    temp->next =NULL;
+    struct node *q =head;
+    for(int i=0;i<pos-2;i++)
+    {
+          q = q->next;
+    }
+    temp->next=q->next;
+    q->next = temp;
+}
+void Delete(int n)
+{
+    struct node *temp1 = head;
+    if(n==1)
+    {
+        head = temp1->next;
+        free(temp1);
+    }
+    else
+    {
+        for(int i=0;i<n-2;i++)
+        {
+            temp1 = temp1->next;
+        }
+        struct node *temp2;
+        temp2 = temp1->next;
+        temp1->next = temp2->next;
+        free(temp2);
+    }
+}
+
+void Print()
+{
+    struct node *q = head;
+    
+    while(q!=NULL)
+    {
+        cout<<q->data<<" ";
+        q = q->next;
+    }
+}
+
+void Reverse()
+{
+    struct node *current,*prev,*next;
+    current = head;
+    prev = NULL;
+    while(current!=NULL)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
+}
+
+int main()
+{
+    int len ;
+    int data,pos,delpos;
+    
+    cout<<"Enter the length of the linkedlist : ";
+    cin>>len;
+    cout<<endl;
+    cout<<"Enter elements : "<<endl;
+    
+    for(int i=0;i<len;i++)
+    {
+        cout<<"Enter element : ";
+        int ele;
+        cin>>ele;
+        cout<<endl;
+       // InsertAtBegin(ele);
+       
+       InsertAtEnd(ele);
+    }
+    
+    cout<<"Printing the elements :- "<<endl;
+    Print();
+    
+    cout<<"Insert At a Given Position : "<<endl;
+    cout<<"Enter Data : ";
+    cin>>data;
+    cout<<endl;
+    cout<<"Enter Position : ";
+    cin>>pos;
+    cout<<endl;
+    InsertAtPos(data,pos);
+    
+    cout<<"Printing after Insertion at given position :"<<endl;
+    Print();
+    
+    cout<<"Enter the Position of the element to delete : ";
+    cin>>delpos;
+    cout<<endl;
+    Delete(delpos);
+    cout<<"Element DELETED !"<<endl;
+    Print();
+    
+    cout<<"Reversing the list "<<endl;
+    Reverse();
+    
+    Print();
+    
+    return 0;
+}
